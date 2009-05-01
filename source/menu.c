@@ -41,7 +41,7 @@ static s32 device = 0, mode = 0;
 #define NB_DEVICES		(sizeof(deviceList) / sizeof(fatDevice))
 
 /* Constants */
-#define ENTRIES_PER_PAGE	6
+#define ENTRIES_PER_PAGE	11
 #define SAVES_DIRECTORY		"/savegames"
 
 
@@ -283,6 +283,9 @@ void Menu_SaveManage(struct savegame *save)
 	char devpath[128];
 	s32  ret;
 
+	/* Clear console */
+	Con_Clear();
+
 	printf("[+] Are you sure you want to %s this savegame?\n\n", (mode) ? "install" : "extract");
 
 	printf("    Title Name : %s\n",          save->name);
@@ -359,12 +362,6 @@ void Menu_SaveList(void)
 			printf("\t%2s \"%s\"\n", (cnt == selected) ? ">>" : "  ", save->name);
 		}
 
-		printf("\n");
-
-		printf("[+] Press A button to %s a savegame.\n", (mode) ? "install" : "extract");
-		printf("    Press B button to go back to the options menu.\n");
-
-
 		/** Controls **/
 		u32 buttons = Wpad_WaitButtons();
 
@@ -389,7 +386,6 @@ void Menu_SaveList(void)
 		/* B button */
 		if (buttons & WPAD_BUTTON_B)
 			break;
-
 
 		/** Scrolling **/
 		/* List scrolling */
